@@ -1,0 +1,13 @@
+[package]
+name = "rocket-bench"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+rocket = "0.5.0-rc.2"
+rocket_async_compression = {version = "0.2.0", optional = true}
+
+[features]
+compression = ["rocket_async_compression"]

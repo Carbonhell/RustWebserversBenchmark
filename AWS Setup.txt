@@ -1,0 +1,26 @@
+# AWS EC2 Setup
+This is a summary of what AWS.sh runs. It's not meant to be run manually: use AWS.sh instead.
+
+1) Create two t3.micro instances, ensuring the security group associated to the server one has the port 8080 open.
+2) SSH in the one that will act as the web server.
+
+## Server
+3) `wget https://github.com/Carbonhell/RustWebserversBenchmark/archive/refs/heads/master.zip`
+4) `unzip master.zip`
+5) `rm master.zip`
+
+### Rust installation
+6) `curl https://sh.rustup.rs -sSf > RUSTUP.sh`
+7) `sh RUSTUP.sh -y`
+
+The installed version is info: latest update on 2022-12-15, rust version 1.66.0 (69f9c33d7 2022-12-12)
+8) `source "$HOME/.cargo/env"`
+9) `sudo yum install gcc -y`
+
+Cargo will now be operational.
+After this, follow the instructions in the README.md file for each benchmark you may want to run.
+
+## Client
+10) sudo yum install httpd-tools -y
+11) ab -n 1 -c 1 -k http://PRIVATE_SERVER_IP:8080/single_page.html
+

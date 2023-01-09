@@ -1,0 +1,54 @@
+This is ApacheBench, Version 2.3 <$Revision: 1901567 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 172.31.40.69 (be patient)
+Completed 2000 requests
+Completed 4000 requests
+Completed 6000 requests
+Completed 8000 requests
+Completed 10000 requests
+Completed 12000 requests
+Completed 14000 requests
+Completed 16000 requests
+Completed 18000 requests
+Completed 20000 requests
+Finished 20000 requests
+
+
+Server Software:        
+Server Hostname:        172.31.40.69
+Server Port:            8080
+
+Document Path:          /prototype_kilogram_small.jpg
+Document Length:        1048576 bytes
+
+Concurrency Level:      50
+Time taken for tests:   11.026 seconds
+Complete requests:      20000
+Failed requests:        0
+Keep-Alive requests:    20000
+Total transferred:      20975500000 bytes
+HTML transferred:       20971520000 bytes
+Requests per second:    1813.88 [#/sec] (mean)
+Time per request:       27.565 [ms] (mean)
+Time per request:       0.551 [ms] (mean, across all concurrent requests)
+Transfer rate:          1857761.70 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.0      0       1
+Processing:     7   28   5.4     27      51
+Waiting:        0    4   1.2      4       8
+Total:          7   28   5.4     27      51
+
+Percentage of the requests served within a certain time (ms)
+  50%     27
+  66%     30
+  75%     31
+  80%     32
+  90%     34
+  95%     36
+  98%     39
+  99%     40
+ 100%     51 (longest request)

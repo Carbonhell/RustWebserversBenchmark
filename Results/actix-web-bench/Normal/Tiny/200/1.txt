@@ -1,0 +1,54 @@
+This is ApacheBench, Version 2.3 <$Revision: 1901567 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 172.31.39.57 (be patient)
+Completed 2000 requests
+Completed 4000 requests
+Completed 6000 requests
+Completed 8000 requests
+Completed 10000 requests
+Completed 12000 requests
+Completed 14000 requests
+Completed 16000 requests
+Completed 18000 requests
+Completed 20000 requests
+Finished 20000 requests
+
+
+Server Software:        
+Server Hostname:        172.31.39.57
+Server Port:            8080
+
+Document Path:          /tiny.html
+Document Length:        97283 bytes
+
+Concurrency Level:      200
+Time taken for tests:   1.391 seconds
+Complete requests:      20000
+Failed requests:        0
+Keep-Alive requests:    20000
+Total transferred:      1951540000 bytes
+HTML transferred:       1945660000 bytes
+Requests per second:    14375.99 [#/sec] (mean)
+Time per request:       13.912 [ms] (mean)
+Time per request:       0.070 [ms] (mean, across all concurrent requests)
+Transfer rate:          1369888.19 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.3      0       4
+Processing:     2   14   5.1     13      64
+Waiting:        0    3   3.9      3      48
+Total:          2   14   5.4     13      66
+
+Percentage of the requests served within a certain time (ms)
+  50%     13
+  66%     15
+  75%     16
+  80%     16
+  90%     16
+  95%     17
+  98%     17
+  99%     47
+ 100%     66 (longest request)

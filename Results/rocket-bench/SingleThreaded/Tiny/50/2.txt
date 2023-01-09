@@ -1,0 +1,58 @@
+This is ApacheBench, Version 2.3 <$Revision: 1901567 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 172.31.34.144 (be patient)
+Completed 2000 requests
+Completed 4000 requests
+Completed 6000 requests
+Completed 8000 requests
+Completed 10000 requests
+Completed 12000 requests
+Completed 14000 requests
+Completed 16000 requests
+Completed 18000 requests
+Completed 20000 requests
+Finished 20000 requests
+
+
+Server Software:        Rocket
+Server Hostname:        172.31.34.144
+Server Port:            8080
+
+Document Path:          /tiny.html
+Document Length:        97283 bytes
+
+Concurrency Level:      50
+Time taken for tests:   6.612 seconds
+Complete requests:      20000
+Failed requests:        0
+Keep-Alive requests:    20000
+Total transferred:      1950880000 bytes
+HTML transferred:       1945660000 bytes
+Requests per second:    3024.94 [#/sec] (mean)
+Time per request:       16.529 [ms] (mean)
+Time per request:       0.331 [ms] (mean, across all concurrent requests)
+Transfer rate:          288148.75 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.0      0       1
+Processing:     2   17   0.6     16      18
+Waiting:        0    3   0.2      3       3
+Total:          2   17   0.6     16      18
+WARNING: The median and mean for the processing time are not within a normal deviation
+        These results are probably not that reliable.
+WARNING: The median and mean for the total time are not within a normal deviation
+        These results are probably not that reliable.
+
+Percentage of the requests served within a certain time (ms)
+  50%     16
+  66%     17
+  75%     17
+  80%     17
+  90%     17
+  95%     17
+  98%     18
+  99%     18
+ 100%     18 (longest request)

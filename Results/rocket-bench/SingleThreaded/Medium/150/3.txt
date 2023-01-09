@@ -1,0 +1,54 @@
+This is ApacheBench, Version 2.3 <$Revision: 1901567 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 172.31.34.144 (be patient)
+Completed 2000 requests
+Completed 4000 requests
+Completed 6000 requests
+Completed 8000 requests
+Completed 10000 requests
+Completed 12000 requests
+Completed 14000 requests
+Completed 16000 requests
+Completed 18000 requests
+Completed 20000 requests
+Finished 20000 requests
+
+
+Server Software:        Rocket
+Server Hostname:        172.31.34.144
+Server Port:            8080
+
+Document Path:          /prototype_kilogram_medium.jpg
+Document Length:        2097152 bytes
+
+Concurrency Level:      150
+Time taken for tests:   120.365 seconds
+Complete requests:      20000
+Failed requests:        0
+Keep-Alive requests:    20000
+Total transferred:      41948020000 bytes
+HTML transferred:       41943040000 bytes
+Requests per second:    166.16 [#/sec] (mean)
+Time per request:       902.740 [ms] (mean)
+Time per request:       6.018 [ms] (mean, across all concurrent requests)
+Transfer rate:          340337.55 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.2      0       2
+Processing:   315  901  29.4    902     933
+Waiting:        1    8   0.5      8      10
+Total:        315  901  29.4    902     933
+
+Percentage of the requests served within a certain time (ms)
+  50%    902
+  66%    905
+  75%    907
+  80%    908
+  90%    912
+  95%    914
+  98%    919
+  99%    923
+ 100%    933 (longest request)

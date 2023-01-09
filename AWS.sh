@@ -48,7 +48,7 @@ for webserver in "${webservers[@]}"; do
   if [[ "${webserver}" == "actix-web-bench" ]]; then
     commands=("nohup cargo run --release >log.txt 2>&1 &" "nohup cargo run --release --features compression -- -c >log.txt 2>&1 &" "nohup cargo run --release -- -s >log.txt 2>&1 &")
   elif [[ "${webserver}" == "rocket-bench" ]]; then
-    commands=("ROCKET_PORT=8080 nohup cargo run --release >log.txt 2>&1 &" "ROCKET_PORT=8080 nohup cargo run --release --features=compression >log.txt 2>&1 &" "ROCKET_PORT=8080 ROCKET_WORKERS=1 nohup cargo run --release")
+    commands=("ROCKET_PORT=8080 ROCKET_ADDRESS=0.0.0.0 nohup cargo run --release >log.txt 2>&1 &" "ROCKET_PORT=8080 ROCKET_ADDRESS=0.0.0.0 nohup cargo run --release --features=compression >log.txt 2>&1 &" "ROCKET_PORT=8080 ROCKET_WORKERS=1 ROCKET_ADDRESS=0.0.0.0 nohup cargo run --release >log.txt 2>&1 &")
   elif [[ "${webserver}" == "axum-bench" ]]; then
     commands=("nohup cargo run --release >log.txt 2>&1 &" "nohup cargo run --release --features=compression >log.txt 2>&1 &" "nohup cargo run --release --features=single_threaded >log.txt 2>&1 &")
   fi
@@ -60,8 +60,27 @@ for webserver in "${webservers[@]}"; do
       echo "Test type is ${test_folders[${test_type_key}]}."
 
       for concurrency_level in "${concurrency_levels[@]}"; do
+        if [[ "${test_folders[${test_type_key}]}" == "Tiny" ]]; then
+          target_page="tiny.html";
+        elif [[ "${test_folders[${test_type_key}]}" == "Small" ]]; then
+          target_page="prototype_kilogram_small.jpg";
+        elif [[ "${test_folders[${test_type_key}]}" == "Medium" ]]; then
+          target_page="prototype_kilogram_medium.jpg";
+        elif [[ "${test_folders[${test_type_key}]}" == "Large" ]]; then
+          target_page="prototype_kilogram_large.jpg";
+        elif [[ "${test_folders[${test_type_key}]}" == "Dynamic" ]]; then
+          target_page="dynamic?first=2&second=3"
+        fi
+        result_dir=./Results/${webserver}/${server_type[${command_key}]}/"${test_folders[${test_type_key}]}/${concurrency_level}"
+        if [ -d "${result_dir}" ]; then
+          echo "Result folder for this test already exists: ${result_dir}"
+          echo "Skipping..."
+          continue
+        fi
+
         # Restart the server for each group of repetitions
-        echo "Starting ${webserver}..."
+        echo "Starting ${webserver} with command: "
+        echo "${commands[${command_key}]}"
         sudo ssh -i "$sshkey" ec2-user@"$server_ip" <<EOF
           pkill actix-web-bench
           pkill rocket-bench
@@ -69,10 +88,10 @@ for webserver in "${webservers[@]}"; do
           pkill cargo
           unset ROCKET_WORKERS
           cd ~/RustWebserversBenchmark-master/${webserver}
-          nohup ${commands[${command_key}]} >log.txt 2>&1 &
+          ${commands[${command_key}]}
 EOF
         printf "Waiting for the server to be ready... (This may take a few minutes due to the compilation step)"
-        while ! sudo ssh -q -i "$sshkey" ec2-user@"$client_ip" "curl --output /dev/null --silent --head --fail http://${private_server_ip}:8080/single_page.html" ; do
+        while ! sudo ssh -q -i "$sshkey" ec2-user@"$client_ip" "curl --output /dev/null --silent --head --fail http://${private_server_ip}:8080/tiny.html" ; do
             printf "."
             sleep 20
         done
@@ -81,22 +100,13 @@ EOF
 
         # Repeat each test thrice
         for i in "1" "2" "3"; do
-          if [[ "${test_folders[${test_type_key}]}" == "Tiny" ]]; then
-            target_page="tiny.html";
-          elif [[ "${test_folders[${test_type_key}]}" == "Small" ]]; then
-            target_page="prototype_kilogram_small.jpg";
-          elif [[ "${test_folders[${test_type_key}]}" == "Medium" ]]; then
-            target_page="prototype_kilogram_medium.jpg";
-          elif [[ "${test_folders[${test_type_key}]}" == "Large" ]]; then
-            target_page="prototype_kilogram_large.jpg";
-          elif [[ "${test_folders[${test_type_key}]}" == "Dynamic" ]]; then
-            target_page="dynamic?first=2&second=3"
-          fi
-          benchmark_cmd="ab -n ${requests} -c ${concurrency_level} -k http://${private_server_ip}:8080/${target_page} >${i}.txt 2>&1"
+          benchmark_cmd="ab -n ${requests} -c ${concurrency_level} -k \"http://${private_server_ip}:8080/${target_page}\" >${i}.txt 2>&1"
           echo "Benchmark command is: ${benchmark_cmd}"
+          echo "Starting in 5 seconds..."
+          sleep 5
+          echo "Starting!"
           sudo ssh -i "$sshkey" ec2-user@"$client_ip" "${benchmark_cmd}"
 
-          result_dir=./Results/${webserver}/${server_type[${command_key}]}/"${test_folders[${test_type_key}]}/${concurrency_level}"
           mkdir -p "${result_dir}"
           sudo scp -q -i "$sshkey" ec2-user@"$client_ip":~/${i}.txt "${result_dir}"/"${i}".txt
         done
